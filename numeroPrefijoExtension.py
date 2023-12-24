@@ -10,7 +10,7 @@ prefijos=["49","54","61","43","32","1","57","34"]
 pais=["Alemania","Argentina","Australia","Austria","Bélgica","Canadá","Colombia","España"]
 
 
-if len(numeroEntero)>9:    
+if len(numeroEntero)>9:
     i=0
     while i<len(numeroEntero):
         if numeroEntero[i]==" " or numeroEntero[i]=="-" or numeroEntero[i]==".":
@@ -56,18 +56,18 @@ else:
 
 
 
-'''i=0
-    while i<len(numeroSeparado):
-        if (numeroSeparado[i] in prefijos):  #Comparo que la palabra no esté en el vector articulo
-            numeroSeparado[i]=numeroSeparado[i].replace(prefijos,pais)#Pone en mayuscula la primera
-        else:
-            numeroSeparado=numeroSeparado[i] #Pone en minuscula 
-            print("Prefijo incorrecto")
-    print (numeroSeparado)'''
+# i=0
+# while i<len(numeroSeparado):
+#      if (numeroSeparado[i] in prefijos):  #Comparo que la palabra no esté en el vector articulo
+#           numeroSeparado[i]=numeroSeparado[i].replace(prefijos,pais)#Pone en mayuscula la primera
+#      else:
+#           numeroSeparado=numeroSeparado[i] #Pone en minuscula 
+#           print("Prefijo incorrecto")
+# print (numeroSeparado)
 
 
 
 
 
-'''numero=numeroEntero.split("-") #Hacemos que divida la cadena cuando haya un "-".
-print(numero[1])'''
+# numero=numeroEntero.split("-") #Hacemos que divida la cadena cuando haya un "-".
+# print(numero[1])

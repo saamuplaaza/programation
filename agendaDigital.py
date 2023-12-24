@@ -6,9 +6,9 @@ agendaDigital= {
         "teléfono":"644812930"
     },
     #Segundo contacto
-    "Sara Prieto González" :{
-        "dirección": "Calle serbal, 11",
-        "email":"saraprietogonzalez@gmail.com",
+    "Alejandro Sanz" :{
+        "dirección": "Corazon Partio, 11",
+        "email":"alejandrosanz@gmail.com",
         "teléfono":"620172934"
     }
 }

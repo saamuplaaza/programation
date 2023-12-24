@@ -4,13 +4,14 @@
 #   Título: PRÁCTICA 3: LA RULETA DE LA SUERTE
 # -----------------------------------------------
 
+# from multiprocessing import Value
 import random
 import os
 
 # Definir funciones
 
-def quitarTilde(fraseAdivinar, i):
-    listaSinTilde=list(fraseAdivinar)
+def quitarTilde(panel, i):
+    listaSinTilde=list(panel)
     for letra in listaSinTilde:
         if letra =="Á":
             listaSinTilde[i]="A"
@@ -44,8 +45,8 @@ def quitarTildeRespuesta(respuesta, i):
     return respuestaSinTilde
 
 def cambiarConsonantes(i, acumulacionConsonantes, contador):
-    listaAsteriscos=list(fraseAdivinar)
-    listaSinTilde=quitarTilde(fraseAdivinar, i)
+    listaAsteriscos=list(panel)
+    listaSinTilde=quitarTilde(panel, i)
     while i<len(listaAsteriscos):
         if acumulacionConsonantes==[]: # Para la primera vez que entra en la función, no hay lista con consonantes, por lo que creamos esta condición.
             if (ord(listaSinTilde[i])>=65 and ord(listaSinTilde[i])<=122) or listaSinTilde[i]=="Ñ":
@@ -112,19 +113,19 @@ vocales="aeiou"
 vocales=vocales.upper()
 acumulacionConsonantes=[]
 dinero=0
-numRandom=random.randrange(0, 125, 25)
+opcionesRuleta=[50, 25, 75, 50, 0, 75, 25, 100, "x2", "QUIEBRA"]
+ruleta=random.choice(opcionesRuleta)
 fraseLimpia=""
 respuestaLimpia=""
 
 
 # Código principal
-
+print("\nVamos a jugar a la Ruleta de la Suerte pero, antes de empezar, hay que introducir la pista del panel y el panel a resolver.")
 pista=input("Introducir una pista: ")
 pista= pista.upper()
-fraseAdivinar=input("Introducir una frase: ")
-fraseAdivinar= fraseAdivinar.upper()
+panel=input("Introducir una frase: ")
+panel= panel.upper()
 os.system("cls")
-
 print("""
 .______    ____                  __          ___         .______       __    __   __       _______ .___________.    ___         
 |   _  \  |___ \                |  |        /   \        |   _  \     |  |  |  | |  |     |   ____||           |   /   \        
@@ -145,6 +146,22 @@ input("Pulse Intro para continuar...")
 fraseSinTilde= cambiarConsonantes(i, acumulacionConsonantes, contador)[2]
 while True:
     os.system("cls")
+    print("""
+.______    ____                  __          ___         .______       __    __   __       _______ .___________.    ___         
+|   _  \  |___ \                |  |        /   \        |   _  \     |  |  |  | |  |     |   ____||           |   /   \        
+|  |_)  |   __) |     ______    |  |       /  ^  \       |  |_)  |    |  |  |  | |  |     |  |__   `---|  |----`  /  ^  \       
+|   ___/   |__ <     |______|   |  |      /  /_\  \      |      /     |  |  |  | |  |     |   __|      |  |      /  /_\  \      
+|  |       ___) |               |  `----./  _____  \     |  |\  \----.|  `--'  | |  `----.|  |____     |  |     /  _____  \     
+| _|      |____/                |_______/__/     \__\    | _| `._____| \______/  |_______||_______|    |__|    /__/     \__\    
+                                                                                                                                
+_______   _______     __          ___              _______. __    __   _______ .______     .___________. _______               
+|       \ |   ____|   |  |        /   \            /       ||  |  |  | |   ____||   _  \    |           ||   ____|              
+|  .--.  ||  |__      |  |       /  ^  \          |   (----`|  |  |  | |  |__   |  |_)  |   `---|  |----`|  |__                 
+|  |  |  ||   __|     |  |      /  /_\  \          \   \    |  |  |  | |   __|  |      /        |  |     |   __|                
+|  '--'  ||  |____    |  `----./  _____  \     .----)   |   |  `--'  | |  |____ |  |\  \----.   |  |     |  |____               
+|_______/ |_______|   |_______/__/     \__\    |_______/     \______/  |_______|| _| `._____|   |__|     |_______|              
+                                                                            
+""")
     print("-----------------------------------------------------------------------------------------------------------\n")
     fraseConsonantes=cambiarConsonantes(i, acumulacionConsonantes, contador)
     print(fraseConsonantes[0])
@@ -153,42 +170,61 @@ while True:
     print("\n------------------------------------------------MENÚ-------------------------------------------------------\n")
     print("Total: %s€\n\n" %total)
     print("\t1. Decir letra\n")
-    print("\t2. Comprar vocal\n")
+    print("\t2. Comprar vocal (10€)\n")
     print("\t3. Resolver\n")
+    print("\t4. Rendirme\n")
     print("-----------------------------------------------------------------------------------------------------------")
     opcion=input("Elija una opción: ")
     print("-----------------------------------------------------------------------------------------------------------\n")
 
     if opcion=="": # Introduce un Intro por teclado.
-        print("Debe elegir una de las opciones del menú.")
+        print("Debes elegir una de las opciones del menú.")
         input("Pulsa Intro para continuar...")
     elif opcion=="1": # Decir letra
-        numRandom=random.randrange(0, 125, 25) # Genera número aleatorio entre 0 y 100 con intervalos de 25. (0, 25, 50, 75, 100)
-        print("--> %s€" %(numRandom))
-        while True:
-            consonante=input("Introduce una cosonante: ")
-            consonante=consonante.upper()
-            if consonante not in consonantes: # Consonante no se encuentra en la lista de consonantes.
-                print("No has introducido una consonante.")
-            elif consonante in acumulacionConsonantes: # Consonante repetida.
-                print("Ya has dicho esta consonante.")
-            elif consonante in consonantes:
-                if consonante=="": # Caso en el que el usuario introduzca un Intro.
-                    print("No has introducido ninguna consonante.")
-                    input("Pulsa Intro para continuar...")
-                elif consonante in fraseAdivinar: # La consonante se encuentra en la frase que hay que adivinar.
-                    listaConsonantes=acumulacionConsonantes.append(consonante) # Añadir la consonante a una lista en la que se encuentran todas las introducidas anteriormente.
-                    fraseConsonantes=cambiarConsonantes(i, acumulacionConsonantes, contador)
-                    vecesLetra=fraseConsonantes[1]
-                    dinero=vecesLetra*numRandom
-                    total= total+dinero
-                    break
-                else: # La consonante no se encuentra en la frase que hay que adivinar.
-                    listaConsonantes=acumulacionConsonantes.append(consonante)
-                    print("La '%s' no se encuentra en el panel." %consonante)
-                    input("Pulsa Intro para continuar...")
-                    break
-                break    
+        ruleta=random.choice(opcionesRuleta) # La ruleta escoge un número aleatorio de los que hay en la lista 'opcionesRuleta'. Esta lista tiene 10 opciones.
+        try: # Si es un entero, lo imprime con el símbolo del euro.
+            ruleta= int(ruleta)
+            print("--> %s€" %(ruleta))
+        except ValueError: # Si no es un entero, lo imprime tal cual.
+            print("--> %s" %ruleta)
+        
+        if ruleta=="QUIEBRA": # Si la ruleta cae en quiebra, se resetea el dinero que llevas.
+            total=0
+            print("Has caído en la quiebra, pierdes todo el dinero que llevabas.")
+            input("Pulsa Intro para continuar...")
+        else:
+            while True:
+                consonante=input("Introduce una cosonante: ")
+                consonante=consonante.upper()
+                if consonante not in consonantes: # Consonante no se encuentra en la lista de consonantes.
+                    print("No has introducido una consonante.")
+                elif consonante in acumulacionConsonantes: # Consonante repetida.
+                    print("Ya has dicho esta consonante.")
+                elif consonante in consonantes:
+                    if consonante=="": # Caso en el que el usuario introduzca un Intro.
+                        print("No has introducido ninguna consonante.")
+                    elif consonante in panel: # La consonante se encuentra en la frase que hay que adivinar.
+                        listaConsonantes=acumulacionConsonantes.append(consonante) # Añadir la consonante a una lista en la que se encuentran todas las introducidas anteriormente.
+                        fraseConsonantes=cambiarConsonantes(i, acumulacionConsonantes, contador)
+                        vecesLetra=fraseConsonantes[1]
+                        if vecesLetra==1:
+                            print("La '%s' está %s vez." %(consonante, vecesLetra))
+                        else:
+                            print("La '%s' está %s veces." %(consonante, vecesLetra))
+                        try: # Si ha tocado un número en la ruleta, se lo sumas al total.
+                            dinero=vecesLetra*int(ruleta)
+                            total= total+dinero
+                        except ValueError: # Si la ruleta cae en x2, se duplica el dimero que llevas conseguido.
+                            total= total*2
+
+                        input("Pulsa Intro para continuar...")
+                        break
+                    else: # La consonante no se encuentra en la frase que hay que adivinar.
+                        listaConsonantes=acumulacionConsonantes.append(consonante)
+                        print("La '%s' no se encuentra en el panel." %consonante)
+                        input("Pulsa Intro para continuar...")
+                        break
+                    
 
     # Para la opción 2 creamos dos situaciones: Una en la que el total sea mayor que 10 en el que cual puedes comprar vocales; 
     # y otro en el que el total es menor que 10 y no te deja comprar vocales.
@@ -201,14 +237,19 @@ while True:
             elif vocal in vocales:
                 if vocal=="": # Caso en el que el usuario introduzca un Intro.
                     print("No has introducido ninguna vocal.")
-                    input("Pulsa Intro para continuar...")
-                elif vocal in fraseAdivinar: # La vocal se encuentra en la frase que hay que adivinar.
-                    print("%s --> -10€" %vocal)
-                    input("Pulsa Intro para continuar...")
+                elif vocal in panel: # La vocal se encuentra en la frase que hay que adivinar.
+                    # print("%s --> -10€" %vocal)
+                    # input("Pulsa Intro para continuar...")
                     dinero=10 # La vocal cuesta 10€ comprarla.
                     listaVocales=acumulacionConsonantes.append(vocal)
                     fraseConsonantes=cambiarConsonantes(i, acumulacionConsonantes, contador)
+                    vecesVocal=fraseConsonantes[1]
+                    if vecesVocal==1:
+                        print("La '%s' está %s vez." %(vocal, vecesVocal))
+                    else:
+                        print("La '%s' está %s veces." %(vocal, vecesVocal))
                     total=total-dinero
+                    input("Pulsa Intro para continuar...")
                     break
                 else: # La vocal no se encuentra en la frase que hay que adivinar. No te quitan dinero.
                     print("La '%s' no se encuentra en el panel." %vocal)
@@ -224,10 +265,25 @@ while True:
         respuesta = respuesta.upper()
         solucion = esSolucion()
         if solucion[0] == solucion[1]: # Habíamos creado una lista en la función de la solución. Ahora compramos los elementos de dicha lista. Si los dos elementos son iguales, significa que la respuesta es correcta.
-            print("¡¡ENHORABUENA, HAS ACERTADO!!\n")
-            print("Has conseguido un total de %s€" %total)
+            print('''
+_______ _______ _______ _______ ______ _______ ______ _______ _______ _______ _______ 
+|    ___|    |  |   |   |       |   __ \   _   |   __ \   |   |    ___|    |  |   _   |
+|    ___|       |       |   -   |      <       |   __ <   |   |    ___|       |       |
+|_______|__|____|___|___|_______|___|__|___|___|______/_______|_______|__|____|___|___|
+                                                                                       
+ _______ _______ _______      _______ _______ _______ _______ _____  _______           
+|   |   |   _   |     __|    |     __|   _   |    |  |   _   |     \|       |          
+|       |       |__     |    |    |  |       |       |       |  --  |   -   |          
+|___|___|___|___|_______|    |_______|___|___|__|____|___|___|_____/|_______|          
+                                                                                             
+            ''')
+            print("Has conseguido un total de %s€\n" %total)
             break
         else:
             print("Esa no es la solución. Inténtalo de nuevo.")
+            input("Pulsa Intro para continuar...")
+    elif opcion=="4": # Rendirme
+        break
     else:
         print("Elije una de las opciones del menú.")
+        input("Pulsa Intro para continuar...")
