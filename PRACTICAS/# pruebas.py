@@ -4,6 +4,7 @@ if palabra==palabraInversa:
     print("palindromo")
 else:
     print("no palindromo")
+    print("Adiós")
 
 
 
